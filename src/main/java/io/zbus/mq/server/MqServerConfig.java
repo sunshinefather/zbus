@@ -16,8 +16,11 @@ import org.xml.sax.InputSource;
 
 public class MqServerConfig{  
 	
-	public String serverHost = "0.0.0.0";
-	public int serverPort = 15555;   
+	public static final String defaultServerHost = "0.0.0.0";
+	public static final int defaultServerPort = 15555;
+	
+	public String serverHost = defaultServerHost;
+	public int serverPort = defaultServerPort; 
 	public String trackServerList = null;
 	
 	public String sslCertificateFile;
@@ -132,8 +135,8 @@ public class MqServerConfig{
 		Document doc = db.parse(source); 
 		
 		String prefix = "//zbus"; 
-		this.serverHost = valueOf(xeval(xpath, doc, prefix, "host"), "0.0.0.0");  
-		this.serverPort = valueOf(xeval(xpath, doc, prefix, "port"), 15555);
+		this.serverHost = valueOf(xeval(xpath, doc, prefix, "host"),defaultServerHost);  
+		this.serverPort = valueOf(xeval(xpath, doc, prefix, "port"),defaultServerPort);
 		this.storePath = valueOf(xeval(xpath, doc, prefix, "mqStore"), "./store");
 		this.verbose = valueOf(xeval(xpath, doc, prefix, "verbose"), false); 
 		this.serverMainIpOrder = valueOf(xeval(xpath, doc, prefix, "mainIpOrder"),null);

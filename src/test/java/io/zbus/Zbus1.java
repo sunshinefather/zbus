@@ -10,7 +10,6 @@ public class Zbus1 {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {     
 		InputStream stream = Zbus1.class.getClassLoader().getResourceAsStream("conf/zbus1.xml");
-		
 		MqServerConfig config = new MqServerConfig(); 
 		config.loadFromXml(stream);   
 		
