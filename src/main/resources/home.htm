@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>Home - zbus</title>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/base.js"></script>
+<script type="text/javascript" src="/js/zbus.js"></script>
+<link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+
+</head>
+<body> 
+<div class="header">
+
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>  
+            <a class="navbar-brand" href="/"> 
+            	<img src="/img/logo.svg"></img> 
+            	<span>ZBUS = MQ + RPC</span>
+            </a> 
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
+             <ul class="nav navbar-nav"> 
+            	<li><a class="link" href="/page/trace.htm">Trace</a></li>  
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a target="_blank" href="http://zbus.io/">Documentation</a></li>
+                <li><a target="_blank" href="http://git.oschina.net/rushmore/zbus">Gitosc</a></li>
+                <li><a target="_blank" href="http://github.com/rushmore/zbus">Github</a></li>
+                <li class="hidden-xs"><p class="navbar-text"><span class="label label-success" id="version"></span></p></li>
+            </ul> 
+        </div>
+    </div>
+</nav>
+</div>
+ 
+<div class="nodes container-fluid">   
+  
+
+
+<div class="row">
+    <div class="col-md-12">   
+        <div id="track-list" class="table table-condensed">  
+       	 	<span class="label label-primary">Trackers</span>
+        </div> 
+    </div>  
+</div>    
+  
+<div class="row">
+    <div class="col-md-12">
+        <span class="label label-primary">Servers</span>
+    </div> 
+    <div class="col-md-12">
+        <table id="server-list"  class="table table-condensed table-bordered">
+            <tbody>
+            <tr> 
+                <th style="width: 16%">Server Address 
+                <div class="filter-box">
+                	<input id="filter-server" type='checkbox' checked="checked">
+                </div>
+                </th> 
+	            <th style="width: 8%">Version</th> 
+                <th>Topics</th>
+            </tr>  
+        	</tbody>
+        </table>
+    </div> 
+</div>   
+
+<div class="row">
+    <div class="col-md-12">
+        <span class="label label-primary">Topics</span>
+    </div>
+</div> 
+
+<div class="row">
+    <div class="col-md-12 table-responsive">
+        <table id="topic-list"  class="table table-condensed table-bordered">
+            <tbody>
+            <tr class="active"> 
+                <th style="width: 6%">Topic</th> 
+                <th style="width: 1%">In Server</th> 
+	            <th style="width: 8%">Msg Depth</th> 
+	            <th style="width: 8%">Msg Unconsumed</th> 
+	            <th style="width: 8%">Consumer (Idle / Total)</th> 
+                <th style="width: 8%">Consumer Group</th>  
+            </tr>  
+        	</tbody>
+        </table>
+    </div>
+</div> 
+
+<div id="topic-modal" class="modal"  tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    
+    	<div class="modal-header"> 
+    		<div class="caption"><span id="modal-topic"></span> 
+    		</div>  
+    		<div class="close-box"><span class="topic label label-info" data-dismiss="modal" aria-label="Close">x</span></div>
+     	</div> 
+	     	<div class="action-list">   
+		      	<span class="action label label-danger">Delete Topic</span>
+		      	<span class="action label label-info">Pause Topic</span>
+		      	<span class="action label label-warning">Empty Topic</span> 
+		    </div>   
+	     
+	    <div class="topic-server-list">
+		    <div class="col-md-12">
+		        <table id="modal-server-list" class="table table-condensed table-bordered">
+		            <tbody> 
+		            <tr class="active"> 
+		                <th style="width: 8%">In Server 
+		                <div class="filter-box">
+                			<input id="modal-filter-server"  class="server" type='checkbox' checked="checked">
+                		</div>
+		                </th>  
+			            <th style="width: 8%">Msg Depth</th> 
+			            <th style="width: 8%">Msg Unconsumed</th>  
+			            <th style="width: 10%">Consumer(Idle/Total)</th> 
+		                <th style="width: 6%">ConsumerGroup</th>  
+		            </tr>    
+		        	</tbody>
+		        </table>
+		    </div>
+		</div> 	
+		
+		
+		<div class="action-list">   
+	      	<span class="action label label-danger">Delete Group</span>
+	      	<span class="action label label-info">Pause Group</span>
+	      	<span class="action label label-warning">Empty Group</span>
+	    </div>   
+		<div class="consumer-group-list">
+		    <div class="col-md-12">
+		        <table id="modal-group-list"  class="table table-condensed table-bordered">
+		            <tbody>
+		            <tr class="active"> 
+		            	<th style="width: 8%">Consumer Group
+			            	<div class="filter-box">
+	                			<input id="modal-filter-group" class="group" type='checkbox' checked="checked">
+	                		</div>
+		            	</th>  
+		            	<th style="width: 4%">Msg Depth</th>
+			            <th style="width: 4%">Msg Unconsumed</th>
+			            <th style="width: 8%">Msg Filter</th>  
+			            <th style="width: 4%">Consumer(Idle/Total)</th> 
+		                <th style="width: 4%">In Server</th>   
+		            </tr>   
+		        	</tbody>
+		        </table>
+		    </div>
+		</div> 	 
+    </div>
+  </div>
+</div>
+
+
+</div>
+ 
+ 
+<script type="text/javascript"> 
+
+
+$(document).ready(function(){  
+	
+var trackBroker = null;
+var filterServerList = [];
+
+function updateTrackInfo(){
+	filterServerList = [];
+    $("#server-list input.server").each(function(data){
+    	var checked = $(this).is(":checked");
+    	if(checked){
+    		filterServerList.push($(this).val());
+    	} 
+    });  
+    
+    if(trackBroker){
+    	trackBroker.filterServerList = filterServerList;
+    	trackBroker.updateTopicSummary();
+    	showTopicTable(trackBroker);
+    } 
+} 
+
+
+$("#filter-server").change(function() {
+	var checked = $(this).is(":checked");
+	$("#server-list input.server").prop("checked", checked);   
+	
+	updateTrackInfo();
+});  
+
+$("#server-list").on("change", "input.server", function() {
+	var checked = $(this).is(":checked");
+	$(this).prop("checked", checked);  
+   
+    updateTrackInfo(); 
+}); 
+
+$.get('/version',function(data){  
+	$("#version").text(data); 
+});  
+
+
+
+$.getJSON('/info',function(serverInfo){   
+	trackBroker = new TrackBroker(serverInfo.serverAddress);  
+	trackBroker.onServerUpdated = function(serverAddress){
+		showTopicTable(trackBroker);
+		showServerTable(trackBroker);
+	};
+	trackBroker.connect();
+	 
+	for(var i in serverInfo.trackerList){
+		var address = serverInfo.trackerList[i]; 
+		$("#track-list").append(
+			"<a class='link' target='_blank' href='http://" +address + "'>" + address + "</a>"
+		);
+	}  
+});    
+
+
+////////////////////modal actions/////////////////////
+
+$("#topic-modal").draggable({ handle:'.modal-header'}); 
+
+$("#topic-modal").on("show.bs.modal", function(e){ 
+	$(this).find('.modal-content').css({
+        width:'auto', //probably not needed
+        height:'auto', //probably not needed 
+        'max-height':'100%'
+	}); 
+	
+	$("#modal-server-list input.server").prop("checked", true); 
+	$("#modal-group-list input.server").prop("checked", true); 
+	
+	var topic = e.relatedTarget.innerText; 
+	$("#modal-topic").text(topic);
+	showModalServerList(trackBroker, topic);
+	showModalConsumerGroupList(trackBroker, topic); 
+
+});
+
+
+$("#modal-server-list").on("change", "input.server", function() {
+	var checked = $(this).is(":checked");
+	$(this).prop("checked", checked);   
+});
+
+$("#modal-filter-server").change(function() {
+	var checked = $(this).is(":checked");
+	$("#modal-server-list input.server").prop("checked", checked);    
+});   
+
+$("#modal-group-list").on("change", "input.group", function() {
+	var checked = $(this).is(":checked");
+	$(this).prop("checked", checked);   
+});
+
+$("#modal-filter-group").change(function() {
+	var checked = $(this).is(":checked");
+	$("#modal-group-list input.group").prop("checked", checked);    
+});   
+
+});
+
+
+</script> 
+
+</body>
+
+</html>

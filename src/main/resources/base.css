@@ -1,0 +1,71 @@
+.navbar-brand {
+  padding-top: 8px;	
+}
+.navbar-brand > img {
+  width: 36px;
+  height: 36px;  
+  display: inline;
+} 
+ 
+.topic {
+	margin: 3px;
+	cursor: pointer;
+} 
+
+.filter-box{
+	float: right; 
+	clear: right;  
+	padding-top: 1px;
+}
+textarea.log { 
+	border-style: none; 
+    border-color: Transparent; 
+    overflow: auto; 
+    resize: none;
+}
+
+.label-as-badge{
+	border-radius: 3em;
+	padding-left: 6px;
+	padding-right: 6px;
+} 
+.topic-deactive{
+	color: black;
+	background-color: white;
+}
+
+.badge-deactive{
+	color: black;
+	background-color: #777;
+}
+.modal-content{
+	width: 1000px;
+	height: 600px;
+}
+.close-box{
+	float: right; 
+	clear: right;   
+}
+
+.action {
+	margin: 6px;
+	padding: 6px;
+	cursor: pointer;
+} 
+.action-list {
+	margin: 8px; 
+} 
+.modal-header{
+	padding: 10px;
+}
+.caption{
+	margin-left: 6px;
+	display: inline;
+}
+.caption span{
+	font-weight: bolder;
+}
+
+.consumer-group-list { 
+    overflow-y: auto;  
+}
